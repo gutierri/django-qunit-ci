@@ -5,8 +5,8 @@ QUnit.Django = {
   failedAssertions: [],
   moduleName: '',
   modules: {},
-  original_module: module,
-  original_test: test,
+  original_module: QUnit.module,
+  original_test: QUnit.test,
   ready: false,
   results: {modules: {}},
   screenshot_number: 1,
@@ -17,7 +17,7 @@ QUnit.Django = {
  * Override of QUnit's module definition function so we can get information
  * about the test queue before it's started.
  */
-module = function (name, testEnvironment) {
+QUnit.module = function (name, testEnvironment) {
   QUnit.Django.moduleName = name;
   return QUnit.Django.original_module.apply(QUnit, arguments);
 };
@@ -27,7 +27,7 @@ module = function (name, testEnvironment) {
  * about the test queue before it's started.  Note that we'll be including
  * even tests which won't be run due to a URL filter, if any.
  */
-test = function (testName, expected, callback, async) {
+QUnit.test = function (testName, expected, callback, async) {
   var qd = QUnit.Django,
       moduleName = qd.moduleName,
       modules = qd.modules;
