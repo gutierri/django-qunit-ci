@@ -28,3 +28,4 @@ storage
 .ropeproject
 .settings
 .tox
+.venv
