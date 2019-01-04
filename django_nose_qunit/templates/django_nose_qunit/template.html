@@ -1,10 +1,11 @@
 {% load staticfiles %}
-<!DOCTYPE html> 
+{% load compress %}
+<!DOCTYPE html>
 <html data-testing="1">
   <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="{% static 'qunit.css' %}" type="text/css" media="screen">  
-    <script type="text/javascript" src="{% static 'qunit.js' %}"></script>     
+    <link rel="stylesheet" href="{% static 'qunit.css' %}" type="text/css" media="screen">
+    <script type="text/javascript" src="{% static 'qunit.js' %}"></script>
     <script type="text/javascript" src="{% static 'qunit-config.js' %}"></script>
     <script type="text/javascript">
         QUnit.config.autostart = false;
@@ -13,12 +14,24 @@
         {% endif %}
     </script>
     {% for dep in dependencies %}
+      {% if dep|slice:"-6:" == "coffee" %}
+      {% compress js %}
+      <script type="text/coffeescript" src="{% static dep %}"></script>
+      {% endcompress %}
+      {% else %}
       <script type="text/javascript" src="{% static dep %}"></script>
+      {% endif %}
     {% endfor %}
     {% for raw_script_url in raw_script_urls %}
       <script type="text/javascript" src="{{ raw_script_url }}"></script>
     {% endfor %}
+    {% if test_file|slice:"-6:" == "coffee" %}
+    {% compress js %}
+    <script type="text/coffeescript" src="{% static test_file %}"></script>
+    {% endcompress %}
+    {% else %}
     <script type="text/javascript" src="{% static test_file %}"></script>
+    {% endif %}
   </head>
   <body>
     <h1 id="qunit-header">{{ title }}</h1>
