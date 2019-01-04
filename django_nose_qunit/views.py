@@ -2,7 +2,7 @@ import importlib
 import logging
 
 from django.conf import settings as django_settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 

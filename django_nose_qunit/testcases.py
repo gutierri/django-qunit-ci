@@ -1,7 +1,7 @@
 import json
 import logging
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import render
 
 from sbo_selenium import SeleniumTestCase
